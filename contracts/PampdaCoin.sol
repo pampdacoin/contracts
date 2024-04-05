@@ -68,24 +68,24 @@ contract PampdaCoin is IPampdaCoin, ERC20, ERC20Burnable, Ownable {
      * @dev Overrides transfer function to apply fees.
      */
     function _update(address from, address to, uint256 value) internal override {
+        // Skip fee for exception wallets
         if (exceptFeeWallets[from] || exceptFeeWallets[to]) {
             super._update(from, to, value);
             return;
         }
 
-        bool isLiquiditySender = liquidityPools[from]; // Buying
-        bool isLiquidityReceiver = liquidityPools[to]; // Selling
+        uint256 feeAmount = 0;
 
-        uint256 feeAmount;
-
-        if (isLiquiditySender) {
-            feeAmount = (value * BUY_FEE_BPS) / HUNDRED_PERCENT_IN_BPS;
-        } else if (isLiquidityReceiver) {
-            feeAmount = (value * SELL_FEE_BPS) / HUNDRED_PERCENT_IN_BPS;
+        if (liquidityPools[from]) {
+            feeAmount = (value * BUY_FEE_BPS) / HUNDRED_PERCENT_IN_BPS; // Apply buy fee
+        } else if (liquidityPools[to]) {
+            feeAmount = (value * SELL_FEE_BPS) / HUNDRED_PERCENT_IN_BPS; // Apply sell fee
+        } else {
+            super._update(from, to, value); // Normal transfer
+            return;
         }
 
-        if (feeAmount != 0) super._update(from, address(0), feeAmount); // burn all fees
-
+        super._update(from, address(0), feeAmount); // burn all fees
         super._update(from, to, value - feeAmount); // transfer value
     }
 }
