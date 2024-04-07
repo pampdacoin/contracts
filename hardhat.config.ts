@@ -1,5 +1,4 @@
 import "@nomicfoundation/hardhat-toolbox";
-import "@openzeppelin/hardhat-upgrades";
 import { config as dotenvConfig } from "dotenv";
 import "hardhat-contract-sizer";
 import type { HardhatUserConfig } from "hardhat/config";
@@ -139,7 +138,7 @@ const config: HardhatUserConfig = {
       },
       optimizer: {
         enabled: true,
-        runs: 800,
+        runs: 999999,
       },
     },
   },

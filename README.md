@@ -43,19 +43,6 @@ Deploy the PampdaCoin contract to the Ethereum network of your choice. Ensure th
 - **Update Liquidity Pool**: Call the `updateLiquidityPool` function to update the status of a liquidity pool, specifying the pool address and the new status.
 - **Update Exception Fee Wallet**: Use the `updateExceptFeeWallet` function to update the status of an exception fee wallet by providing the target address and the new status.
 
-### Example
-
-```solidity
-// Deploy the contract
-PampdaCoin pampdaCoin = new PampdaCoin(msg.sender);
-
-// Update liquidity pool status
-pampdaCoin.updateLiquidityPool(liquidityPoolAddress, true);
-
-// Update exception fee wallet status
-pampdaCoin.updateExceptFeeWallet(exceptionWalletAddress, true);
-
-```
 
 ## License
 

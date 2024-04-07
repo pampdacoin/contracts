@@ -85,7 +85,7 @@ contract PampdaCoin is IPampdaCoin, ERC20, ERC20Burnable, Ownable {
             return;
         }
 
-        super._update(from, address(0), feeAmount); // burn all fees
-        super._update(from, to, value - feeAmount); // transfer value
+        super._update(from, address(0), feeAmount); // Burn all fees
+        super._update(from, to, value - feeAmount); // Transfer value after deducting the fee
     }
 }
