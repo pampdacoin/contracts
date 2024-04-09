@@ -14,6 +14,7 @@ import { IPampdaCoin } from "./interfaces/IPampdaCoin.sol";
  * Buy and sell fees are immutable.
  */
 contract PampdaCoin is IPampdaCoin, ERC20, ERC20Burnable, Ownable {
+    uint256 public constant MAX_SUPPLY = 999_999_999_999 * 1e18;
     uint256 public constant BUY_FEE_BPS = 100; // Buy fee in basis points (1%)
     uint256 public constant SELL_FEE_BPS = 300; // Sell fee in basis points (3%)
     uint256 public constant HUNDRED_PERCENT_IN_BPS = 10_000; // 100% in basis points
@@ -26,7 +27,7 @@ contract PampdaCoin is IPampdaCoin, ERC20, ERC20Burnable, Ownable {
      * @param initialOwner The initial owner of the contract.
      */
     constructor(address initialOwner) ERC20("Pamp Da Coin", "PAMP") Ownable(initialOwner) {
-        _mint(initialOwner, 999_999_999_999 * 1e18);
+        _mint(initialOwner, MAX_SUPPLY);
         exceptFeeWallets[initialOwner] = true;
     }
 
